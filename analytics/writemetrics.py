@@ -13,8 +13,7 @@ from pyspark.sql.context import SQLContext
 from confluent.schemaregistry.client import CachedSchemaRegistryClient
 from confluent.schemaregistry.serializers import MessageSerializer
 
-
-
+topic = sys.argv[1]
 zk_ip = 'localhost'
 
 schema_registry_client = CachedSchemaRegistryClient(url='http://'+ zk_ip + ':8081')
@@ -31,16 +30,12 @@ def main():
     sqlContext = SQLContext(sc)
     zk_host = zk_ip+":2181"
     consumer_group = "reading-consumer-group"
-    kafka_partitions={"amtest":1}
+    kafka_partitions={topic:1}
     #create kafka stream
     kvs = KafkaUtils.createStream(ssc,zk_host,consumer_group,kafka_partitions,valueDecoder=decoder)
     lines = kvs.map(lambda x: x[1])
-    #readings = lines.map(lambda x: {"device_id":x["device_id"],"metric_time":x["metric_time"],"metric_name":x["metric_name"],"metric_value":x["metric_value"]})
     readings = lines.map(lambda x: {"device_id":x["device_id"],"metric_time":datetime.datetime.fromtimestamp(int(x["metric_time"])),"metric_name":x["metric_name"],"metric_value":float(x["metric_value"])})
     readings.foreachRDD(lambda rdd: rdd.saveToCassandra("metrics", "raw_metrics"))
-    #readingdf.show()
-    #readings.pprint()
-    #lines.saveToCassandra("metrics", "raw_metrics")
     ssc.start()
     ssc.awaitTermination()
 if __name__ == "__main__":
