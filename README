@@ -21,4 +21,15 @@ scripts/startdse.sh
 scripts/starkafka.sh
 
 #Run simulator (generates REST calls to Kafka and runs DSE analytics code to insert values into DSE)
-scripts/simulate_sensor_writes.sh
+scripts/simulate_sensor_writes.sh <topic name> <number of sensors> <time interval>
+
+#For example, the following inserts one reading into a topic named "meter_readings" for 100 sensors every 15 minutes:
+scripts/simulate_sensor_writes.sh meter_readings 100 900
+
+#Run the batch job
+scripts/runbatch.sh
+
+#You can verify the data is in the tables in cql:
+> USE metrics;
+> SELECT * FROM metrics LIMIT 100;
+> SELECT * FROM metrics WHERE device_id='1';
