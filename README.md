@@ -15,25 +15,26 @@ Within the virtualenv install python dependencies:
 >`pip install requests`  
 `pip install json`
 
-Install confluent python library (virtualenv recommended): https://github.com/verisign/python-confluent-schemaregistry
+Install confluent python library (virtualenv recommended): 
+>https://github.com/verisign/python-confluent-schemaregistry
 
 ##USAGE
-#The following instructions assume you are in the energy_iot/ directory
+The following instructions assume you are in the `energyiot/` directory
 
-#SETUP
-#Start dse
-scripts/setup/startdse.sh
+###SETUP
+Start dse:  
+`scripts/setup/startdse.sh`
 
-#create data model
-scripts/setup/createdatamodel.sh
+Create data model:  
+`scripts/setup/createdatamodel.sh`  
 
-#Start Kafka components in a new window or screen
-scripts/setup/startkafka.sh
+Start Kafka components in a new window or screen:  
+`scripts/setup/startkafka.sh`
 
-#Create Kafka topic
-scripts/setup/create_topic.sh <topic_name>
-#For example:
-scripts/setup/create_topic.sh meter_readings
+Create Kafka topic:  
+`scripts/setup/create_topic.sh <topic_name>`  
+>For example:  
+`scripts/setup/create_topic.sh meter_readings`
 
 #Start Streaming job in a new window or screen, adding the topic name as a commandline argument
 scripts/setup/start_streaming.sh meter_readings
