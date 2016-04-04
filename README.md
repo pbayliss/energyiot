@@ -1,3 +1,6 @@
+##Background
+This repo is the technical how-to guide for running a sample Energy IoT application leveraging DataStax Enterprise. For background on the use case and architecture please see the following - https://gist.github.com/pbayliss/9a27b069e7b28bbf67a9f00806ebf170
+
 ##Prerequisites
 Install the confluent package in your home directory ("~/"): 
 >http://docs.confluent.io/2.0.1/installation.html#installation-archive  
@@ -18,7 +21,7 @@ Within the virtualenv install python dependencies:
 Install confluent python library (virtualenv recommended): 
 >https://github.com/verisign/python-confluent-schemaregistry
 
-##USAGE
+##Usage
 The following instructions assume you are in the `energyiot/` directory
 
 ###Setup
