@@ -13,7 +13,7 @@ pip install json
 #Install confluent python library (virtualenv recommended): https://github.com/verisign/python-confluent-schemaregistry
 
 #USAGE
-#The following instructions assume you are in the energy_iot/ directory
+#The following instructions assume you are in the energyiot/ directory
 
 #SETUP
 #Start dse
