@@ -7,12 +7,13 @@ Install dse in your home directory:
 
 Install pip: 
 >https://pip.pypa.io/en/stable/installing/
+
 Optional: 
->Install, setup, and enter a virtualenv when running python code: 
->>http://docs.python-guide.org/en/latest/dev/virtualenvs/
->>Install python dependencies (virtualenv recommended)
->>>`pip install requests`
->>>`pip install json`
+Install, setup, and enter a virtualenv when running python code: 
+>http://docs.python-guide.org/en/latest/dev/virtualenvs/
+Install python dependencies (virtualenv recommended)
+>>`pip install requests`
+>>`pip install json`
 
 Install confluent python library (virtualenv recommended): https://github.com/verisign/python-confluent-schemaregistry
 
