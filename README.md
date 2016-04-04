@@ -11,7 +11,7 @@ Install pip:
 Optional: 
 Install, setup, and enter a virtualenv when running python code: 
 >http://docs.python-guide.org/en/latest/dev/virtualenvs/  
-Within the virtualenv install python dependencies:
+Within the virtualenv install python dependencies:  
 >`pip install requests`  
 `pip install json`
 
