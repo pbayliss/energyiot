@@ -1,16 +1,22 @@
-PRE-REQS
-#Install the confluent package in your home directory ("~/"): http://docs.confluent.io/2.0.1/installation.html#installation-archive
-#Install dse in your home directory: http://docs.datastax.com/en/datastax_enterprise/4.8/datastax_enterprise/install/installTARdse.html
-#Install pip: https://pip.pypa.io/en/stable/installing/
-#optional: Install, setup, and enter a virtualenv when running python code: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+##Prerequisites
+Install the confluent package in your home directory ("~/"): 
+>http://docs.confluent.io/2.0.1/installation.html#installation-archive  
 
-#Install python dependencies (virtualenv recommended)
-pip install requests
-pip install json
+Install dse in your home directory: 
+>http://docs.datastax.com/en/datastax_enterprise/4.8/datastax_enterprise/install/installTARdse.html
 
-#Install confluent python library (virtualenv recommended): https://github.com/verisign/python-confluent-schemaregistry
+Install pip: 
+>https://pip.pypa.io/en/stable/installing/
+Optional: 
+>Install, setup, and enter a virtualenv when running python code: 
+>>http://docs.python-guide.org/en/latest/dev/virtualenvs/
+>>Install python dependencies (virtualenv recommended)
+>>>`pip install requests`
+>>>`pip install json`
 
-#USAGE
+Install confluent python library (virtualenv recommended): https://github.com/verisign/python-confluent-schemaregistry
+
+##USAGE
 #The following instructions assume you are in the energy_iot/ directory
 
 #SETUP
