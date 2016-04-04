@@ -21,8 +21,8 @@ Install confluent python library (virtualenv recommended):
 ##USAGE
 The following instructions assume you are in the `energyiot/` directory
 
-###SETUP
-Start dse:  
+###Setup
+Start DSE:  
 `scripts/setup/startdse.sh`
 
 Create data model:  
@@ -36,18 +36,20 @@ Create Kafka topic:
 >For example:  
 `scripts/setup/create_topic.sh meter_readings`
 
-#Start Streaming job in a new window or screen, adding the topic name as a commandline argument
-scripts/setup/start_streaming.sh meter_readings
+Start Streaming job in a new window or screen, adding the topic name as a commandline argument:  
+`scripts/setup/start_streaming.sh meter_readings`
 
-#Run simulator in a new window or screen. Use the topic name you created in the create_topic script.
-scripts/simulate_sensor_writes.sh <topic name> <number of sensors> <time interval>
-#For example, the following inserts one reading into a topic named "meter_readings" for 100 sensors every 15 minutes:
-scripts/simulate_sensor_writes.sh meter_readings 100 900
+Run simulator in a new window or screen. Use the topic name you created in the create_topic script:  
+`scripts/simulate_sensor_writes.sh <topic name> <number of sensors> <time interval>`  
+>For example, the following inserts one reading into a topic named "meter_readings" for 100 sensors every 15 minutes:  
+`scripts/simulate_sensor_writes.sh meter_readings 100 900`
 
-#Run the batch job
-scripts/runbatch.sh
+Run the batch job:  
+`scripts/runbatch.sh`
 
-#You can verify the data is in the tables in cql:
-> USE metrics;
-> SELECT * FROM metrics LIMIT 100;
-> SELECT * FROM metrics WHERE device_id='1';
+You can verify the data is in the tables in cql:  
+```
+USE metrics;
+SELECT * FROM metrics LIMIT 100;
+SELECT * FROM metrics WHERE device_id='1';
+```
