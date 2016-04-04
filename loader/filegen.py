@@ -10,7 +10,7 @@ import sys
 
 start_id = int(sys.argv[1])
 stop_id = int(sys.argv[2])
-data_dir = sys.argv[3]
+data_file = sys.argv[3]
 def generate_sensor_data(start_id, stop_id):
     time = datetime.datetime.now()
     epochtime = int(time.strftime("%s"))
@@ -25,7 +25,7 @@ def generate_sensor_data(start_id, stop_id):
 
 def main():
     results = generate_sensor_data(start_id,stop_id)
-    b = open(data_dir+'sensordata'+str(datetime.datetime.now())+'.csv', 'wb')
+    b = open(data_file, 'wb')
     a = csv.writer(b)
     for result in results:
         a.writerow(result)

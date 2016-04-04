@@ -2,7 +2,9 @@ PRE-REQS
 #Install the confluent package in your home directory ("~/"): http://docs.confluent.io/2.0.1/installation.html#installation-archive
 #Install dse in your home directory: http://docs.datastax.com/en/datastax_enterprise/4.8/datastax_enterprise/install/installTARdse.html
 #Install pip: https://pip.pypa.io/en/stable/installing/
+#Install cassandra-loader in your home directory: https://github.com/brianmhess/cassandra-loader
 #optional: Install, setup, and enter a virtualenv when running python code: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+
 
 #Install python dependencies (virtualenv recommended)
 pip install requests
@@ -19,6 +21,11 @@ scripts/setup/startdse.sh
 
 #create data model
 scripts/setup/createdatamodel.sh
+
+#Bulk load data (data is 15 minute increment flate file, generated as part of script)
+scripts/setup/load_data.sh <start sensor id> <stop sensor id> <csv output file> <dse host>
+#The following bulk loads one day's data for sensors 1-5 in  to host 127.0.0.1, storing csv ./data/sensor.csv
+scripts/setup/load_data.sh 1 5 ./data/sensordata.csv 127.0.0.1
 
 #Start Kafka components in a new window or screen
 scripts/setup/startkafka.sh
