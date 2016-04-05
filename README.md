@@ -39,8 +39,8 @@ Create Kafka topic:
 >For example:
 `scripts/setup/create_topic.sh meter_readings`
 
-Start Streaming job in a new window or screen, adding the topic name as a commandline argument:
-`scripts/setup/start_streaming.sh meter_readings`
+Start Streaming job in a new window or screen, adding the topic name and zookeeper hostname as a commandline argument:
+`scripts/setup/start_streaming.sh meter_readings localhost`
 
 Run simulator in a new window or screen. Use the topic name you created in the create_topic script:
 `scripts/simulate_sensor_writes.sh <topic name> <number of sensors> <time interval>`
