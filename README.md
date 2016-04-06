@@ -56,3 +56,22 @@ USE metrics;
 SELECT * FROM metrics LIMIT 100;
 SELECT * FROM metrics WHERE device_id='1';
 ```
+REST Interface
+```
+Compile:
+```
+mvn clean compile 
+```
+To use the webservice, start the web server using
+```
+mvn jetty:run
+```
+Open a browser and use a url like
+```
+http://{servername}:8080/datastax-meters-iot/rest/gettransactions/{deviceid}/{from}/{to}
+```
+Note : the from and to are dates in the format yyyyMMdd hh:mm:ss - eg
+```
+http://localhost:8080/datastax-meters-iot/rest/gettransactions/1234123412341234/20150101/20160102/
+```
+
