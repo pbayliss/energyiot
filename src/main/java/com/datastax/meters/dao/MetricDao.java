@@ -30,10 +30,10 @@ public class MetricDao {
 	private static String metricTable = keyspaceName + ".raw_metrics";
   
         /* use to select without time restriction*/
-	private static final String GET_TRANSACTIONS_BY_ID = "select * from " + metricTable
+	private static final String GET_METRICS_BY_ID = "select * from " + metricTable
 			+ " where device_id = ? ";
 
-	private static final String GET_TRANSACTIONS_BY_TIME = "select * from " + metricTable
+	private static final String GET_METRICS_BY_TIME = "select * from " + metricTable
 			+ " where device_id = ? and metric_time >= ? and metric_time < ?";
 
 	
@@ -50,8 +50,8 @@ public class MetricDao {
 
 		try {
 
-			this.getMetricById = session.prepare(GET_TRANSACTIONS_BY_ID);
-			this.getMetricByTime = session.prepare(GET_TRANSACTIONS_BY_TIME);
+			this.getMetricById = session.prepare(GET_METRICS_BY_ID);
+			this.getMetricByTime = session.prepare(GET_METRICS_BY_TIME);
 
 
 		} catch (Exception e) {
