@@ -17,7 +17,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.datastax.meters.model.Transaction;
+import com.datastax.meters.model.Metric;
 import com.datastax.meters.service.SearchService;
 import com.datastax.meters.service.SearchServiceImpl;
 
@@ -32,9 +32,9 @@ public class MetersWS {
 	private SearchService service = new SearchServiceImpl();
 	
 	@GET
-	@Path("/gettransactions/{deviceid}/{from}/{to}")
+	@Path("/getmetrics/{deviceid}/{from}/{to}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMovements(@PathParam("deviceid") String deviceID, @PathParam("from") String fromDate,
+	public Response getMetrics(@PathParam("deviceid") String deviceID, @PathParam("from") String fromDate,
 			@PathParam("to") String toDate) {
 		
 		DateTime from = DateTime.now();
@@ -49,7 +49,7 @@ public class MetersWS {
 			return Response.status(Status.BAD_REQUEST).entity(error).build();
 		}
 				
-		List<Transaction> result = service.getTransactionsByTagAndDate(deviceID, from, to);
+		List<Metric> result = service.getMetricsByIDAndDate(deviceID, from, to);
                 
 		
 		return Response.status(Status.OK).entity(result).build();

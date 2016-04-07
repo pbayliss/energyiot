@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.Set;
 import java.math.*;
 
-public class Transaction {
+public class Metric {
 
 	private String deviceID;
 	private Date metricTime;
 	private String metricName;
 	private BigDecimal metricValue;
 
-	public Transaction() {
+	public Metric() {
 		super();
 	}
 
@@ -50,7 +50,7 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [deviceID=" + deviceID + ", metricTime=" + metricTime + ", metricName="
+		return "Metric [deviceID=" + deviceID + ", metricTime=" + metricTime + ", metricName="
 				+ metricName + ", metricValue=" + metricValue + "]";
 	}
 

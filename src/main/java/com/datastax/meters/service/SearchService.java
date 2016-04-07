@@ -5,11 +5,11 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 
-import com.datastax.meters.model.Transaction;
+import com.datastax.meters.model.Metric;
 
 public interface SearchService {
 
 	public double getTimerAvg();
 
-	List<Transaction> getTransactionsByTagAndDate(String DeviceID, DateTime from, DateTime to);
+	List<Metric> getMetricsByIDAndDate(String DeviceID, DateTime from, DateTime to);
 }
