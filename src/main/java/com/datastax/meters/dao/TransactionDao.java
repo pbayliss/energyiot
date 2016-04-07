@@ -24,28 +24,19 @@ public class TransactionDao {
 	private static Logger logger = LoggerFactory.getLogger(TransactionDao.class);
 	private Session session;
 
-        /* change keyspace name and table name.  Do not use latest transactions. 03-24-16 Alex */
-
+        /* change if needed - keyspace name and table name */
 	private static String keyspaceName = "metrics";
 
 	private static String transactionTable = keyspaceName + ".raw_metrics";
   
-        /* not used 03-24-16 Alex */
-
-	private static final String INSERT_INTO_TRANSACTION = "Insert into "
-			+ transactionTable
-			+ " (device_id , metric_time , metric_name , metric_value ) values (?,?,?,?);";
-    
-        /* not used 03-24-16 Alex */
-
+        /* use to select without time restriction*/
 	private static final String GET_TRANSACTIONS_BY_ID = "select * from " + transactionTable
 			+ " where device_id = ? ";
-        /* Changed. 04-03-16 Alex */
+
 	private static final String GET_TRANSACTIONS_BY_TIME = "select * from " + transactionTable
 			+ " where device_id = ? and metric_time >= ? and metric_time < ?";
 
 	
-	private PreparedStatement insertTransactionStmt;
 	private PreparedStatement getTransactionById;
 	private PreparedStatement getTransactionByTime;
 
@@ -58,13 +49,10 @@ public class TransactionDao {
 		this.session = cluster.connect();
 
 		try {
-			this.insertTransactionStmt = session.prepare(INSERT_INTO_TRANSACTION);
 
 			this.getTransactionById = session.prepare(GET_TRANSACTIONS_BY_ID);
-                        /* changed. 04-03-16 Alex */
 			this.getTransactionByTime = session.prepare(GET_TRANSACTIONS_BY_TIME);
 
-			this.insertTransactionStmt.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,33 +61,9 @@ public class TransactionDao {
 		}
 	}
 
-	public void saveTransaction(Transaction transaction) {
-		insertTransactionAsync(transaction);
-	}
-
-	public void insertTransactionAsync(Transaction transaction) {
-		
-		int year = new DateTime().withMillis(transaction.getMetricTime().getTime()).getYear();
-		
-                /* original 03-24-16 Alex */
-		ResultSetFuture future = session.executeAsync(this.insertTransactionStmt.bind(transaction.getDeviceID(), 
-				transaction.getMetricTime(), transaction.getMetricName(), transaction.getMetricValue()));
-
-             /* not needed. 03/24016 Alex */
-
-		future.getUninterruptibly();
-
-		long total = count.incrementAndGet();
-
-		if (total % 10000 == 0) {
-			logger.info("Total transactions processed : " + total);
-		}
-
-	}
-
 	public Transaction getTransaction(String deviceId) {
 
-                /* changed to device. 03-24-16 Alex */
+                /* changed if needed to reflect field names */
 		ResultSetFuture rs = this.session.executeAsync(this.getTransactionById.bind(deviceId));
 
 		Row row = rs.getUninterruptibly().one();
@@ -114,8 +78,6 @@ public class TransactionDao {
 
 		Transaction t = new Transaction();
 
-                /* original 03-24-16 Alex */
-
 		t.setDeviceID(row.getString("device_id"));
 		t.setMetricTime(row.getDate("metric_time"));
 		t.setMetricName(row.getString("metric_name"));
@@ -124,18 +86,16 @@ public class TransactionDao {
 		return t;
 	}
 
-        /* not needed. 03-24-16 Alex */
 	
-        /* use deviceId  03-24-16 Alex */
-	public List<Transaction> getTransactionsForDeviceIDTagsAndDate(String deviceID, Set<String> tags, DateTime from,
+	public List<Transaction> getTransactionsForDeviceIDTagsAndDate(String deviceID, DateTime from,
 			DateTime to) {
-                        /* changed. 04-03-16 Alex */
+
 		ResultSet resultSet = this.session.execute(getTransactionByTime.bind(deviceID, from.toDate(), to.toDate()));
 		
-		return processResultSet(resultSet, tags);
+		return processResultSet(resultSet);
 	}
 
-	private List<Transaction> processResultSet(ResultSet resultSet, Set<String> tags) {
+	private List<Transaction> processResultSet(ResultSet resultSet ) {
 		List<Row> rows = resultSet.all();
 		List<Transaction> transactions = new ArrayList<Transaction>();
 
@@ -143,19 +103,7 @@ public class TransactionDao {
 
 			Transaction transaction = rowToTransaction(row);	
 			
-			if (tags !=null && tags.size() !=0){
-								
-				Iterator<String> iter = tags.iterator();
-				
-				//Check to see if any of the search tags are in the tags of the transaction.
-				while (iter.hasNext()) {
-					String tag = iter.next();
-					
-                                        /* commented whole IF statement. 03-27-16 Alex */
-				}
-			}else{
-				transactions.add(transaction);
-			}
+		        transactions.add(transaction);
 		}
 		return transactions;
 	}

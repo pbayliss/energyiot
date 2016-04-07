@@ -11,5 +11,5 @@ public interface SearchService {
 
 	public double getTimerAvg();
 
-	List<Transaction> getTransactionsByTagAndDate(String DeviceID, Set<String> search, DateTime from, DateTime to);
+	List<Transaction> getTransactionsByTagAndDate(String DeviceID, DateTime from, DateTime to);
 }

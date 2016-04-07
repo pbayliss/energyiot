@@ -23,19 +23,17 @@ import com.datastax.meters.service.SearchServiceImpl;
 
 @WebService
 @Path("/")
-public class BankingWS {
+public class MetersWS {
 
-	private Logger logger = LoggerFactory.getLogger(BankingWS.class);
+	private Logger logger = LoggerFactory.getLogger(MetersWS.class);
 	private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyyMMdd");
 
 	//Service Layer.
 	private SearchService service = new SearchServiceImpl();
 	
 	@GET
-        /* use deiviceid. 03-27-16 Alex */
 	@Path("/gettransactions/{deviceid}/{from}/{to}")
 	@Produces(MediaType.APPLICATION_JSON)
-        /* changed. put PathParam as creditcardno  03-24-16 Alex */
 	public Response getMovements(@PathParam("deviceid") String deviceID, @PathParam("from") String fromDate,
 			@PathParam("to") String toDate) {
 		
@@ -51,8 +49,7 @@ public class BankingWS {
 			return Response.status(Status.BAD_REQUEST).entity(error).build();
 		}
 				
-                /* changed. 03-24-16 Alex */
-		List<Transaction> result = service.getTransactionsByTagAndDate(deviceID, null, from, to);
+		List<Transaction> result = service.getTransactionsByTagAndDate(deviceID, from, to);
                 
 		
 		return Response.status(Status.OK).entity(result).build();

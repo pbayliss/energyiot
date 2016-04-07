@@ -12,18 +12,6 @@ public class Transaction {
 	private String metricName;
 	private BigDecimal metricValue;
 
-	private String creditCardNo;
-	private String userId;
-	private Date transactionTime;
-	private String transactionId;
-	private Map<String, Double> items;
-	private String location;
-	private String merchant;
-	private Double amount;
-	private String status;	
-	private String notes;
-	private Set<String> tags;
-
 	public Transaction() {
 		super();
 	}
@@ -60,64 +48,10 @@ public class Transaction {
 		this.metricName = metricName;
 	}
 
-	public void setCreditCardNo(String creditCardNo) {
-		this.creditCardNo = creditCardNo;
-	}
-
-	public void setTransactionTime(Date transactionTime) {
-		this.transactionTime = transactionTime;
-	}
-
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
-
-	public void setItems(Map<String, Double> items) {
-		this.items = items;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public void setMerchant(String merchant) {
-		this.merchant = merchant;
-	}
-
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-
-        /* commented out. 03-27-16 Alex */
-	
-	public void setTags(Set<String> tags) {
-		this.tags = tags;
-	}
-
 	@Override
 	public String toString() {
-        /* changed 03-24-16 Alex */
 		return "Transaction [deviceID=" + deviceID + ", metricTime=" + metricTime + ", metricName="
 				+ metricName + ", metricValue=" + metricValue + "]";
 	}
 
-	public enum Status {
-		CHECK, APPROVED, DECLINED, CLIENT_APPROVED, CLIENT_DECLINED, CLIENT_APPROVAL, TIMEOUT
-	}
 }

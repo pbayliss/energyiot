@@ -28,16 +28,13 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-        /* Changed. 03-24-16 Alex */
 
-	public List<Transaction> getTransactionsByTagAndDate(String deviceID, Set<String> search, DateTime from, DateTime to) {
+	public List<Transaction> getTransactionsByTagAndDate(String deviceID,  DateTime from, DateTime to) {
 		
 		Timer timer = new Timer();
 		List<Transaction> transactions;
 
-		//If the to and from dates are within the 3 months we can use the latest transactions table as it should be faster.		
-                /* only one set of transactions for now. 03-24-16 Alex */
-			transactions = dao.getTransactionsForDeviceIDTagsAndDate(deviceID, search, from, to);
+		transactions = dao.getTransactionsForDeviceIDTagsAndDate(deviceID, from, to);
 			
 		timer.end();
 		timerSum += timer.getTimeTakenMillis();
