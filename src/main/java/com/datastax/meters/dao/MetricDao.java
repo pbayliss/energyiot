@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.datastax.meters.model.Transaction;
+import com.datastax.meters.model.Metric;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.PreparedStatement;
@@ -19,30 +19,30 @@ import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 
-public class TransactionDao {
+public class MetricDao {
 
-	private static Logger logger = LoggerFactory.getLogger(TransactionDao.class);
+	private static Logger logger = LoggerFactory.getLogger(MetricDao.class);
 	private Session session;
 
         /* change if needed - keyspace name and table name */
 	private static String keyspaceName = "metrics";
 
-	private static String transactionTable = keyspaceName + ".raw_metrics";
+	private static String metricTable = keyspaceName + ".raw_metrics";
   
         /* use to select without time restriction*/
-	private static final String GET_TRANSACTIONS_BY_ID = "select * from " + transactionTable
+	private static final String GET_METRICS_BY_ID = "select * from " + metricTable
 			+ " where device_id = ? ";
 
-	private static final String GET_TRANSACTIONS_BY_TIME = "select * from " + transactionTable
+	private static final String GET_METRICS_BY_TIME = "select * from " + metricTable
 			+ " where device_id = ? and metric_time >= ? and metric_time < ?";
 
 	
-	private PreparedStatement getTransactionById;
-	private PreparedStatement getTransactionByTime;
+	private PreparedStatement getMetricById;
+	private PreparedStatement getMetricByTime;
 
 	private AtomicLong count = new AtomicLong(0);
 
-	public TransactionDao(String[] contactPoints) {
+	public MetricDao(String[] contactPoints) {
 
 		Cluster cluster = Cluster.builder().addContactPoints(contactPoints).build();
 
@@ -50,8 +50,8 @@ public class TransactionDao {
 
 		try {
 
-			this.getTransactionById = session.prepare(GET_TRANSACTIONS_BY_ID);
-			this.getTransactionByTime = session.prepare(GET_TRANSACTIONS_BY_TIME);
+			this.getMetricById = session.prepare(GET_METRICS_BY_ID);
+			this.getMetricByTime = session.prepare(GET_METRICS_BY_TIME);
 
 
 		} catch (Exception e) {
@@ -61,22 +61,22 @@ public class TransactionDao {
 		}
 	}
 
-	public Transaction getTransaction(String deviceId) {
+	public Metric getMetric(String deviceId) {
 
                 /* changed if needed to reflect field names */
-		ResultSetFuture rs = this.session.executeAsync(this.getTransactionById.bind(deviceId));
+		ResultSetFuture rs = this.session.executeAsync(this.getMetricById.bind(deviceId));
 
 		Row row = rs.getUninterruptibly().one();
 		if (row == null) {
-			throw new RuntimeException("Error - no transaction for id:" + deviceId);
+			throw new RuntimeException("Error - no metric for id:" + deviceId);
 		}
 
-		return rowToTransaction(row);
+		return rowToMetric(row);
 	}
 
-	private Transaction rowToTransaction(Row row) {
+	private Metric rowToMetric(Row row) {
 
-		Transaction t = new Transaction();
+		Metric t = new Metric();
 
 		t.setDeviceID(row.getString("device_id"));
 		t.setMetricTime(row.getDate("metric_time"));
@@ -87,24 +87,24 @@ public class TransactionDao {
 	}
 
 	
-	public List<Transaction> getTransactionsForDeviceIDTagsAndDate(String deviceID, DateTime from,
+	public List<Metric> getMetricsForDeviceIDAndDate(String deviceID, DateTime from,
 			DateTime to) {
 
-		ResultSet resultSet = this.session.execute(getTransactionByTime.bind(deviceID, from.toDate(), to.toDate()));
+		ResultSet resultSet = this.session.execute(getMetricByTime.bind(deviceID, from.toDate(), to.toDate()));
 		
 		return processResultSet(resultSet);
 	}
 
-	private List<Transaction> processResultSet(ResultSet resultSet ) {
+	private List<Metric> processResultSet(ResultSet resultSet ) {
 		List<Row> rows = resultSet.all();
-		List<Transaction> transactions = new ArrayList<Transaction>();
+		List<Metric> metrics = new ArrayList<Metric>();
 
 		for (Row row : rows) {
 
-			Transaction transaction = rowToTransaction(row);	
+			Metric metric = rowToMetric(row);	
 			
-		        transactions.add(transaction);
+		        metrics.add(metric);
 		}
-		return transactions;
+		return metrics;
 	}
 }
