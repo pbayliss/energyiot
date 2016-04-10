@@ -7,20 +7,21 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.joda.time.DateTime;
 
 import com.datastax.meters.dao.MetricDao;
+import com.datastax.meters.dao.RollupDao;
 import com.datastax.meters.model.Metric;
 import com.datastax.meters.model.Rollup;
 import com.datastax.demo.utils.PropertyHelper;
 import com.datastax.demo.utils.Timer;
 
-public class SearchServiceImpl implements SearchService {
+public class SearchServiceImplRollups implements SearchServiceRollups {
 
-	private MetricDao dao;
+	private RollupDao dao;
 	private long timerSum = 0;
 	private AtomicLong timerCount= new AtomicLong();
 
-	public SearchServiceImpl() {		
+	public SearchServiceImplRollups() {		
 		String contactPointsStr = PropertyHelper.getProperty("contactPoints", "localhost");
-		this.dao = new MetricDao(contactPointsStr.split(","));
+		this.dao = new RollupDao(contactPointsStr.split(","));
 	}	
 
 	@Override
@@ -30,16 +31,16 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 
-	public List<Metric> getMetricsByIDAndDate(String deviceID,  DateTime from, DateTime to) {
+	public List<Rollup> getRollupsByIDAndDate(String deviceID,  DateTime from, DateTime to) {
 		
 		Timer timer = new Timer();
-		List<Metric> metrics;
+		List<Rollup> rollups;
 
-		metrics = dao.getMetricsForDeviceIDAndDate(deviceID, from, to);
+		rollups = dao.getRollupsForDeviceIDAndDate(deviceID, from, to);
 			
 		timer.end();
 		timerSum += timer.getTimeTakenMillis();
 		timerCount.incrementAndGet();
-		return metrics;
+		return rollups;
 	}
 }

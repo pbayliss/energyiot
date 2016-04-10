@@ -8,9 +8,9 @@ import org.joda.time.DateTime;
 import com.datastax.meters.model.Metric;
 import com.datastax.meters.model.Rollup;
 
-public interface SearchService {
+public interface SearchServiceRollups {
 
 	public double getTimerAvg();
 
-	List<Metric> getMetricsByIDAndDate(String DeviceID, DateTime from, DateTime to);
+	List<Rollup> getRollupsByIDAndDate(String DeviceID, DateTime from, DateTime to);
 }
