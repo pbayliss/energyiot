@@ -37,6 +37,7 @@ def process(time, rdd):
         # Get the singleton instance of SQLContext
         sqlContext = getSqlContextInstance(rdd.context)
         readingsDataFrame = sqlContext.createDataFrame(rdd).cache()
+        print("Writing %s records into raw_metrics table ..." % readingsDataFrame.count())
         readingsDataFrame.show(10)
         readingsDataFrame.write.format("org.apache.spark.sql.cassandra").\
             mode('append').options(table="raw_metrics", keyspace="metrics").save()
