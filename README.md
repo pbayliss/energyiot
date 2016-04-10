@@ -74,7 +74,7 @@ http://{servername}:8080/datastax-meters-iot/rest/metrics/getmetrics/{deviceid}/
 ```
 Note : the from and to are dates in the format yyyyMMdd hh:mm:ss - eg
 ```
-http://localhost:8080/datastax-meters-iot/rest/getmetrics/1234123412341234/20150101/20160102/
+http://localhost:8080/datastax-meters-iot/rest/metrics/getmetrics/1234123412341234/20150101/20160102/
 ```
 To get rolled up metrics
 ```
@@ -82,6 +82,6 @@ http://{servername}:8080/datastax-meters-iot/rest/rollups/getrollups/{deviceid}/
 ```
 Note : the from and to are dates in the format yyyyMMdd hh:mm:ss - eg
 ```
-http://localhost:8080/datastax-meters-iot/rest/getmetrics/1234123412341234/20150101/20160102/
+http://localhost:8080/datastax-meters-iot/rest/rollups/getrollups/1234123412341234/20150101/20160102/
 ```
 
