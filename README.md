@@ -68,10 +68,20 @@ mvn jetty:run
 ```
 Open a browser and use a url like
 ```
-http://{servername}:8080/datastax-meters-iot/rest/getmetrics/{deviceid}/{from}/{to}
+To get raw metrics
 ```
-Note : the from and to are dates in the format yyyyMMdd hh:mm:ss - eg
+http://{servername}:8080/datastax-meters-iot/rest/metrics/getmetrics/{deviceid}/{from}/{to}
 ```
-http://localhost:8080/datastax-meters-iot/rest/getmetrics/1234123412341234/20150101/20160102/
+Note : the from and to are dates in the format yyyyMMdd [hh:mm:ss] - eg
+```
+http://localhost:8080/datastax-meters-iot/rest/metrics/getmetrics/1234123412341234/20150101/20160102/
+```
+To get rolled up metrics
+```
+http://{servername}:8080/datastax-meters-iot/rest/rollups/getrollups/{deviceid}/{from}/{to}
+```
+Note : the from and to are dates in the format yyyyMMdd [hh:mm:ss] - eg
+```
+http://localhost:8080/datastax-meters-iot/rest/rollups/getrollups/1234123412341234/20150101/20160102/
 ```
 
