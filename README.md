@@ -70,7 +70,7 @@ USE metrics;
 SELECT * FROM metrics LIMIT 100;
 SELECT * FROM metrics WHERE device_id='1';
 ```
-REST Interface
+###REST Interface
 Compile:  
 ```
 mvn clean compile 
@@ -79,7 +79,7 @@ To use the webservice, start the web server using:
 ```
 mvn jetty:run
 ```  
-Open a browser and use a url like:  
+#####Open a browser and use the following option for the url:  
 
 To get raw metrics:
 ```
