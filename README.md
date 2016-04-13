@@ -25,63 +25,73 @@ Install confluent python library (virtualenv recommended):
 The following instructions assume you are in the `energyiot/` directory
 
 ###Setup
-Start DSE:
-`scripts/setup/startdse.sh`
+Start DSE:  
+```
+scripts/setup/startdse.sh
+```
 
-Create data model:
-`scripts/setup/createdatamodel.sh`
+Create data model:  
+```
+scripts/setup/createdatamodel.sh
+```
 
-Start Kafka components in a new window or screen:
-`scripts/setup/startkafka.sh`
+Start Kafka components in a new window or screen:  
+```
+scripts/setup/startkafka.sh
+```
 
-Create Kafka topic:
-`scripts/setup/create_topic.sh <topic_name>`
->For example:
+Create Kafka topic:  
+```
+scripts/setup/create_topic.sh <topic_name>
+```
+>For example:  
 `scripts/setup/create_topic.sh meter_readings`
 
-Start Streaming job in a new window or screen, adding the topic name and zookeeper hostname as a commandline argument:
-`scripts/setup/start_streaming.sh meter_readings localhost`
+Start Streaming job in a new window or screen, adding the topic name and zookeeper hostname as a commandline argument:  
+```
+scripts/setup/start_streaming.sh meter_readings localhost
+```
 
-Run simulator in a new window or screen. Use the topic name you created in the create_topic script:
-`scripts/simulate_sensor_writes.sh <topic name> <number of sensors> <time interval>`
->For example, the following inserts one reading into a topic named "meter_readings" for 100 sensors every 15 minutes:
-`scripts/simulate_sensor_writes.sh meter_readings 100 900`
+Run simulator in a new window or screen. Use the topic name you created in the create_topic script:  
+```
+scripts/simulate_sensor_writes.sh <topic name> <number of sensors> <time interval>
+```  
+>For example, the following inserts one reading into a topic named "meter_readings" for 100 sensors every 15 minutes:  
+`scripts/simulate_sensor_writes.sh meter_readings 100 900`  
 
-Run the batch job:
-`scripts/runbatch.sh`
+Run the batch job:  
+```
+scripts/runbatch.sh
+```
 
-You can verify the data is in the tables in cql:
+You can verify the data is in the tables in cql:  
 ```
 USE metrics;
 SELECT * FROM metrics LIMIT 100;
 SELECT * FROM metrics WHERE device_id='1';
 ```
-REST Interface
-```
-Compile:
+###REST Interface
+Compile:  
 ```
 mvn clean compile 
-```
-To use the webservice, start the web server using
+```  
+To use the webservice, start the web server using:  
 ```
 mvn jetty:run
-```
-Open a browser and use a url like
-```
-To get raw metrics
+```  
+#####Open a browser and use the following option for the url:  
+
+To get raw metrics:
 ```
 http://{servername}:8080/datastax-meters-iot/rest/metrics/getmetrics/{deviceid}/{from}/{to}
 ```
-Note : the from and to are dates in the format yyyyMMdd [hh:mm:ss] - eg
-```
-http://localhost:8080/datastax-meters-iot/rest/metrics/getmetrics/1234123412341234/20150101/20160102/
-```
-To get rolled up metrics
+>Note: the from and to are dates in the format yyyyMMdd [hh:mm:ss]. For example:  
+`http://localhost:8080/datastax-meters-iot/rest/metrics/getmetrics/1234123412341234/20150101/20160102/`  
+
+To get rolled up metrics:    
 ```
 http://{servername}:8080/datastax-meters-iot/rest/rollups/getrollups/{deviceid}/{from}/{to}
 ```
-Note : the from and to are dates in the format yyyyMMdd [hh:mm:ss] - eg
-```
-http://localhost:8080/datastax-meters-iot/rest/rollups/getrollups/1234123412341234/20150101/20160102/
-```
+>Note: the from and to are dates in the format yyyyMMdd [hh:mm:ss]. For example:  
+`http://localhost:8080/datastax-meters-iot/rest/rollups/getrollups/1234123412341234/20150101/20160102/`  
 
